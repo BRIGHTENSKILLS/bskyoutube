@@ -204,16 +204,6 @@
         }
     </style>
     <script>
-        function openAdditionalVideo() {
-            const main = document.querySelector('main');
-            main.innerHTML = `
-                <iframe class="content-frame" 
-                    src="https://www.youtube.com/embed/videoseries?list=PLuA0rwK36pMh0HS5UPZ6hBToDj-CBEUtn" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                    allowfullscreen>
-                </iframe>
-            `;
-        }
         function openYouTubePlaylist() {
             const main = document.querySelector('main');
             main.innerHTML = `
@@ -230,6 +220,16 @@
             main.innerHTML = `
                 <iframe class="content-frame" 
                     src="https://www.youtube.com/embed/videoseries?list=PLuA0rwK36pMhj-Xvn99xHU3zC-vMC1019" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+                </iframe>
+            `;
+        }
+        function openAdditionalVideo() {
+            const main = document.querySelector('main');
+            main.innerHTML = `
+                <iframe class="content-frame" 
+                    src="https://www.youtube.com/watch?v=z3STNuExQZU" 
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                     allowfullscreen>
                 </iframe>
