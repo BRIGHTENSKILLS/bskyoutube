@@ -309,6 +309,94 @@
         .whatsapp-float:hover .whatsapp-tooltip {
             opacity: 1;
         }
+
+        /* Registration Forms Styles */
+        .registration-section {
+            width: 300px;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            position: fixed;
+            left: 0;
+            top: 80px;
+            bottom: 0;
+            overflow-y: auto;
+            z-index: 900;
+        }
+
+        .registration-section h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            text-align: center;
+        }
+
+        .form-container {
+            margin-bottom: 30px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+        }
+
+        .form-container h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-container h3 i {
+            color: #3498db;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #2c3e50;
+            font-size: 0.9rem;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 5px rgba(52,152,219,0.3);
+        }
+
+        .submit-btn {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background-color: #2980b9;
+        }
+
+        /* Adjust main content margin */
+        .split-layout {
+            margin-left: 300px;
+        }
     </style>
     <script>
         function openYouTubePlaylist() {
@@ -373,6 +461,79 @@
     </header>
 
     <main>
+        <div class="registration-section">
+            <h2>Registration Forms</h2>
+            
+            <div class="form-container">
+                <h3><i class="fas fa-user-graduate"></i> Student Registration</h3>
+                <form id="studentForm" onsubmit="submitForm(event, 'student')">
+                    <div class="form-group">
+                        <label for="studentName">Full Name</label>
+                        <input type="text" id="studentName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="studentEmail">Email</label>
+                        <input type="email" id="studentEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="studentPhone">Phone Number</label>
+                        <input type="tel" id="studentPhone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="studentSchool">School Name</label>
+                        <input type="text" id="studentSchool" required>
+                    </div>
+                    <button type="submit" class="submit-btn">Submit</button>
+                </form>
+            </div>
+
+            <div class="form-container">
+                <h3><i class="fas fa-chalkboard-teacher"></i> Teacher Registration</h3>
+                <form id="teacherForm" onsubmit="submitForm(event, 'teacher')">
+                    <div class="form-group">
+                        <label for="teacherName">Full Name</label>
+                        <input type="text" id="teacherName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="teacherEmail">Email</label>
+                        <input type="email" id="teacherEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="teacherPhone">Phone Number</label>
+                        <input type="tel" id="teacherPhone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="teacherSubject">Subject</label>
+                        <input type="text" id="teacherSubject" required>
+                    </div>
+                    <button type="submit" class="submit-btn">Submit</button>
+                </form>
+            </div>
+
+            <div class="form-container">
+                <h3><i class="fas fa-school"></i> School Registration</h3>
+                <form id="schoolForm" onsubmit="submitForm(event, 'school')">
+                    <div class="form-group">
+                        <label for="schoolName">School Name</label>
+                        <input type="text" id="schoolName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="schoolEmail">Email</label>
+                        <input type="email" id="schoolEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="schoolPhone">Phone Number</label>
+                        <input type="tel" id="schoolPhone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="schoolAddress">Address</label>
+                        <input type="text" id="schoolAddress" required>
+                    </div>
+                    <button type="submit" class="submit-btn">Submit</button>
+                </form>
+            </div>
+        </div>
+
         <div class="split-layout">
             <div class="main-content">
                 <div class="youtube-container">
@@ -445,6 +606,32 @@
         // Update date and time initially and every second
         updateDateTime();
         setInterval(updateDateTime, 1000);
+
+        function submitForm(event, formType) {
+            event.preventDefault();
+            
+            let formData = '';
+            let form = event.target;
+            
+            // Collect form data
+            const formElements = form.elements;
+            for (let i = 0; i < formElements.length; i++) {
+                if (formElements[i].type !== 'submit') {
+                    formData += `${formElements[i].labels[0].textContent}: ${formElements[i].value}\n`;
+                }
+            }
+            
+            // Create WhatsApp message
+            const message = `*New ${formType.charAt(0).toUpperCase() + formType.slice(1)} Registration*\n\n${formData}`;
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappUrl = `https://wa.me/918297209437?text=${encodedMessage}`;
+            
+            // Open WhatsApp
+            window.open(whatsappUrl, '_blank');
+            
+            // Reset form
+            form.reset();
+        }
     </script>
 </body>
 </html> 
