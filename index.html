@@ -225,16 +225,6 @@
                 </iframe>
             `;
         }
-        function openAdditionalVideo() {
-            const main = document.querySelector('main');
-            main.innerHTML = `
-                <iframe class="content-frame" 
-                    src="https://www.youtube.com/embed/z3STNuExQZU?si=h5ktAsRGPB_FxHnL" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                    allowfullscreen>
-                </iframe>
-            `;
-        }
 
         // Date and time script will be moved to the end of the body
         // function updateDateTime() { ... }
@@ -253,6 +243,17 @@
 
         function openBrightenSkillsBlocks() {
             window.open('https://brightenskills.github.io/brightenskillsblocks.github.io/', '_blank');
+        }
+
+        function openAdditionalVideo() {
+            const main = document.querySelector('main');
+            main.innerHTML = `
+                <iframe class="content-frame" 
+                    src="https://www.youtube.com/embed/z3STNuExQZU?si=h5ktAsRGPB_FxHnL" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+                </iframe>
+            `;
         }
     </script>
 </head>
