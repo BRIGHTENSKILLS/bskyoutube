@@ -202,6 +202,64 @@
             line-height: 1.6;
             margin: 0 auto;
         }
+
+        /* Add new styles for the split layout */
+        .split-layout {
+            display: flex;
+            width: 100%;
+            height: 100%;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .materials-sidebar {
+            width: 300px;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+            overflow-y: auto;
+        }
+
+        .materials-sidebar h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .material-item {
+            background-color: #f8f9fa;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #2c3e50;
+        }
+
+        .material-item h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .material-item p {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .material-item a {
+            color: #3498db;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .material-item a:hover {
+            text-decoration: underline;
+        }
     </style>
     <script>
         function openYouTubePlaylist() {
@@ -264,14 +322,41 @@
     </header>
 
     <main>
-        <div class="youtube-container">
-            <div class="button-container">
-                <button onclick="openAdditionalVideo()" class="youtube-button">Watch Video</button>
-                <button onclick="openEvivePlaylist()" class="youtube-button">Get started with your evive Starter Kit</button>
-                <button onclick="openYouTubePlaylist()" class="youtube-button">AI& ML For KIds with Pictoblox</button>
-                <button onclick="openBrightenSkillsBlocks()" class="youtube-button">Brighten Skills Blocks</button>
+        <div class="split-layout">
+            <div class="main-content">
+                <div class="youtube-container">
+                    <div class="button-container">
+                        <button onclick="openAdditionalVideo()" class="youtube-button">Watch Video</button>
+                        <button onclick="openEvivePlaylist()" class="youtube-button">Get started with your evive Starter Kit</button>
+                        <button onclick="openYouTubePlaylist()" class="youtube-button">AI& ML For KIds with Pictoblox</button>
+                        <button onclick="openBrightenSkillsBlocks()" class="youtube-button">Brighten Skills Blocks</button>
+                    </div>
+                    <p class="youtube-description">Click any button above to watch our content or explore our blocks page. The header and footer will remain visible while you interact with this page.</p>
+                </div>
             </div>
-            <p class="youtube-description">Click any button above to watch our content or explore our blocks page. The header and footer will remain visible while you interact with this page.</p>
+            <div class="materials-sidebar">
+                <h2>Learning Materials</h2>
+                <div class="material-item">
+                    <h3>Getting Started Guide</h3>
+                    <p>Learn the basics of our platform and how to make the most of your learning experience.</p>
+                    <a href="#">Download Guide</a>
+                </div>
+                <div class="material-item">
+                    <h3>Project Resources</h3>
+                    <p>Access additional resources and materials for your projects.</p>
+                    <a href="#">View Resources</a>
+                </div>
+                <div class="material-item">
+                    <h3>Code Examples</h3>
+                    <p>Explore sample code and examples to help you learn.</p>
+                    <a href="#">View Examples</a>
+                </div>
+                <div class="material-item">
+                    <h3>Documentation</h3>
+                    <p>Detailed documentation for all features and tools.</p>
+                    <a href="#">Read Documentation</a>
+                </div>
+            </div>
         </div>
     </main>
 
