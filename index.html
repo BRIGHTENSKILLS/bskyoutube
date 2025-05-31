@@ -260,6 +260,55 @@
         .material-item a:hover {
             text-decoration: underline;
         }
+
+        /* WhatsApp Floating Button Styles */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            background-color: #25d366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 2px 2px 3px rgba(0,0,0,0.2);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .whatsapp-float:hover {
+            background-color: #128C7E;
+            transform: scale(1.1);
+            box-shadow: 3px 3px 5px rgba(0,0,0,0.3);
+        }
+
+        .whatsapp-float i {
+            margin-top: 5px;
+        }
+
+        .whatsapp-tooltip {
+            position: absolute;
+            right: 70px;
+            background-color: #333;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 14px;
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .whatsapp-float:hover .whatsapp-tooltip {
+            opacity: 1;
+        }
     </style>
     <script>
         function openYouTubePlaylist() {
@@ -314,6 +363,8 @@
             `;
         }
     </script>
+    <!-- Add Font Awesome for WhatsApp icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <header>
@@ -354,7 +405,6 @@
                     <a href="materials/resources/Excel Logical Formulas.pdf" target="_blank">Logical Formulas</a>
                     <a href="materials/resources/excel practice.pdf" target="_blank">Practice Exercise 1</a>
                     <a href="materials/resources/excel practice2.pdf" target="_blank">Practice Exercise 2</a>
-                    <a href="materials/resources/Exceljet_Excel_Shortcuts_221220.pdf" target="_blank">Excel Shortcuts</a>
                 </div>
                 <div class="material-item">
                     <h3>Web Development</h3>
@@ -373,6 +423,12 @@
              </div>
         </div>
     </footer>
+
+    <!-- Add WhatsApp Floating Button -->
+    <a href="https://wa.me/918297209437" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+        <span class="whatsapp-tooltip">Chat with us on WhatsApp</span>
+    </a>
 
     <div class="watermark">
         <img src="images/logo.png" alt="BRIGHTEN SKILLS Watermark Logo">
