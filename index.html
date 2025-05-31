@@ -608,13 +608,19 @@
             color: #2c3e50;
         }
 
-        /* Add responsive styles for mobile view */
+        /* Update responsive styles for mobile view */
         @media screen and (max-width: 768px) {
+            body {
+                padding-top: 120px; /* Increased to accommodate stacked header */
+            }
+
             header {
                 height: auto;
                 padding: 10px;
                 flex-direction: column;
                 gap: 10px;
+                opacity: 1; /* Make header fully visible on mobile */
+                pointer-events: auto;
             }
 
             .logo {
@@ -628,20 +634,153 @@
                 margin-top: 5px;
             }
 
-            /* Adjust main content padding for mobile */
-            .main-content {
-                padding-left: 20px;
-                margin-right: 0;
+            /* Adjust main layout for mobile */
+            .split-layout {
+                margin-left: 0;
+                flex-direction: column;
             }
 
             /* Adjust registration buttons for mobile */
             .registration-buttons {
-                width: 200px;
+                position: static;
+                width: 100%;
+                padding: 10px;
+                box-shadow: none;
+                border-bottom: 1px solid #ddd;
             }
 
-            /* Adjust split layout for mobile */
-            .split-layout {
-                margin-left: 200px;
+            .registration-buttons h2 {
+                font-size: 1.2rem;
+                margin-bottom: 10px;
+            }
+
+            .reg-button {
+                padding: 10px;
+                font-size: 1rem;
+            }
+
+            /* Adjust main content for mobile */
+            .main-content {
+                padding: 10px;
+                margin: 0;
+                width: 100%;
+            }
+
+            .youtube-container {
+                padding: 10px;
+                width: 100%;
+            }
+
+            .button-container {
+                width: 100%;
+                max-width: none;
+            }
+
+            .youtube-button {
+                padding: 15px 20px;
+                font-size: 1.2rem;
+            }
+
+            .youtube-description {
+                font-size: 1rem;
+                margin: 15px 0;
+            }
+
+            /* Adjust materials sidebar for mobile */
+            .materials-sidebar {
+                position: static;
+                width: 100%;
+                padding: 10px;
+                box-shadow: none;
+                border-top: 1px solid #ddd;
+            }
+
+            .materials-sidebar h2 {
+                font-size: 1.2rem;
+                margin-bottom: 15px;
+            }
+
+            .material-item {
+                padding: 10px;
+                margin-bottom: 10px;
+            }
+
+            /* Adjust modal for mobile */
+            .modal-content {
+                width: 95%;
+                margin: 20px auto;
+                padding: 15px;
+            }
+
+            .form-container {
+                padding: 10px;
+            }
+
+            .form-group {
+                margin-bottom: 10px;
+            }
+
+            .form-group label {
+                font-size: 0.9rem;
+            }
+
+            .form-group input, 
+            .form-group select, 
+            .form-group textarea {
+                padding: 6px;
+                font-size: 0.9rem;
+            }
+
+            /* Adjust footer for mobile */
+            footer {
+                position: static;
+                margin-top: 20px;
+                opacity: 1;
+                pointer-events: auto;
+            }
+
+            .footer-content p {
+                font-size: 0.9rem;
+            }
+
+            /* Adjust WhatsApp button for mobile */
+            .whatsapp-float {
+                bottom: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+                font-size: 25px;
+            }
+
+            /* Adjust payment button for mobile */
+            .payment-button {
+                padding: 12px 20px;
+                font-size: 1.1rem;
+            }
+        }
+
+        /* Additional breakpoint for very small screens */
+        @media screen and (max-width: 480px) {
+            body {
+                padding-top: 100px;
+            }
+
+            .logo {
+                max-height: 40px;
+            }
+
+            #datetime {
+                font-size: 0.8rem;
+            }
+
+            .youtube-button {
+                padding: 12px 15px;
+                font-size: 1.1rem;
+            }
+
+            .reg-button {
+                padding: 8px;
+                font-size: 0.9rem;
             }
         }
     </style>
