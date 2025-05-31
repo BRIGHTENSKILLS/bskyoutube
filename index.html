@@ -607,6 +607,43 @@
             font-weight: bold;
             color: #2c3e50;
         }
+
+        /* Add responsive styles for mobile view */
+        @media screen and (max-width: 768px) {
+            header {
+                height: auto;
+                padding: 10px;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .logo {
+                max-height: 50px;
+            }
+
+            #datetime {
+                position: static;
+                transform: none;
+                font-size: 0.9rem;
+                margin-top: 5px;
+            }
+
+            /* Adjust main content padding for mobile */
+            .main-content {
+                padding-left: 20px;
+                margin-right: 0;
+            }
+
+            /* Adjust registration buttons for mobile */
+            .registration-buttons {
+                width: 200px;
+            }
+
+            /* Adjust split layout for mobile */
+            .split-layout {
+                margin-left: 200px;
+            }
+        }
     </style>
     <script>
         function openYouTubePlaylist() {
