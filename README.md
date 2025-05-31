@@ -1,2 +1,0 @@
-﻿# btsyoutube.github.io
-# bskyoutube
