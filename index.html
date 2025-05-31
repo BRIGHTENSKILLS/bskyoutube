@@ -1025,28 +1025,43 @@
         setInterval(updateDateTime, 1000);
 
         function openRegistrationModal(formType) {
-            document.getElementById('registrationModal').style.display = 'block';
+            const modal = document.getElementById('registrationModal');
+            const studentForm = document.getElementById('studentForm');
+            const teacherForm = document.getElementById('teacherForm');
+            const schoolForm = document.getElementById('schoolForm');
+
             // Hide all forms first
-            document.querySelectorAll('.form-container').forEach(form => {
-                form.style.display = 'none';
-            });
-            // Show only the selected form
-            document.getElementById(formType + 'Form').parentElement.style.display = 'block';
+            studentForm.style.display = 'none';
+            teacherForm.style.display = 'none';
+            schoolForm.style.display = 'none';
+
+            // Show the selected form
+            switch(formType) {
+                case 'student':
+                    studentForm.style.display = 'block';
+                    break;
+                case 'teacher':
+                    teacherForm.style.display = 'block';
+                    break;
+                case 'school':
+                    schoolForm.style.display = 'block';
+                    break;
+            }
+
+            // Show the modal
+            modal.style.display = 'block';
         }
 
         function closeRegistrationModal() {
-            document.getElementById('registrationModal').style.display = 'none';
-            // Show all forms again when closing
-            document.querySelectorAll('.form-container').forEach(form => {
-                form.style.display = 'block';
-            });
+            const modal = document.getElementById('registrationModal');
+            modal.style.display = 'none';
         }
 
         // Close modal when clicking outside
         window.onclick = function(event) {
             const modal = document.getElementById('registrationModal');
             if (event.target == modal) {
-                modal.style.display = 'none';
+                closeRegistrationModal();
             }
         }
 
