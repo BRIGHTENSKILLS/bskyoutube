@@ -225,11 +225,11 @@
                 </iframe>
             `;
         }
-        function openAdditionalVideo() {
+        function openYouTubevideoplayer() {
             const main = document.querySelector('main');
             main.innerHTML = `
                 <iframe class="content-frame" 
-                    src="https://youtu.be/z3STNuExQZU?list=TLPQMzEwNTIwMjUXrKUd4ll-rg" 
+                    src="https://www.youtube.com/embed/z3STNuExQZU?si=h5ktAsRGPB_FxHnL" 
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                     allowfullscreen>
                 </iframe>
@@ -265,7 +265,7 @@
     <main>
         <div class="youtube-container">
             <div class="button-container">
-                <button onclick="openAdditionalVideo()" class="youtube-button">Watch Video</button>
+                <button onclick="openYouTubevideoplayer()" class="youtube-button">Watch Video</button>
                 <button onclick="openEvivePlaylist()" class="youtube-button">Get started with your evive Starter Kit</button>
                 <button onclick="openYouTubePlaylist()" class="youtube-button">AI& ML For KIds with Pictoblox</button>
                 <button onclick="openBrightenSkillsBlocks()" class="youtube-button">Brighten Skills Blocks</button>
