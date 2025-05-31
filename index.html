@@ -310,25 +310,62 @@
             opacity: 1;
         }
 
-        /* Registration Forms Styles */
-        .registration-section {
-            width: 300px;
-            background-color: #fff;
-            padding: 20px;
-            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-            position: fixed;
-            left: 0;
-            top: 80px;
-            bottom: 0;
-            overflow-y: auto;
-            z-index: 900;
+        /* Registration Button and Modal Styles */
+        .register-btn {
+            background-color: #3498db;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .registration-section h2 {
-            color: #2c3e50;
-            margin-bottom: 20px;
-            font-size: 1.5rem;
-            text-align: center;
+        .register-btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 50px auto;
+            padding: 20px;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .close-modal:hover {
+            color: #333;
         }
 
         .form-container {
@@ -461,7 +498,74 @@
     </header>
 
     <main>
-        <div class="registration-section">
+        <div class="split-layout">
+            <div class="main-content">
+                <div class="youtube-container">
+                    <button onclick="openRegistrationModal()" class="register-btn">
+                        <i class="fas fa-user-plus"></i> Register Now
+                    </button>
+                    <div class="button-container">
+                        <button onclick="openAdditionalVideo()" class="youtube-button">Watch Video</button>
+                        <button onclick="openEvivePlaylist()" class="youtube-button">Get started with your evive Starter Kit</button>
+                        <button onclick="openYouTubePlaylist()" class="youtube-button">AI& ML For KIds with Pictoblox</button>
+                        <button onclick="openBrightenSkillsBlocks()" class="youtube-button">Brighten Skills Blocks</button>
+                    </div>
+                    <p class="youtube-description">Click any button above to watch our content or explore our blocks page. The header and footer will remain visible while you interact with this page.</p>
+                </div>
+            </div>
+            <div class="materials-sidebar">
+                <h2>Learning Materials</h2>
+                <div class="material-item">
+                    <h3>Course Units</h3>
+                    <p>Comprehensive course materials organized by units.</p>
+                    <a href="materials/resources/UNIT 1.pdf" target="_blank">Unit 1</a>
+                    <a href="materials/resources/UNIT 2.pdf" target="_blank">Unit 2</a>
+                    <a href="materials/resources/UNIT 3.pdf" target="_blank">Unit 3</a>
+                    <a href="materials/resources/UNIT 4.pdf" target="_blank">Unit 4</a>
+                    <a href="materials/resources/UNIT 5.pdf" target="_blank">Unit 5</a>
+                    <a href="materials/resources/UNIT 6.pdf" target="_blank">Unit 6</a>
+                </div>
+                <div class="material-item">
+                    <h3>Excel Resources</h3>
+                    <p>Comprehensive Excel learning materials and practice files.</p>
+                    <a href="materials/resources/EBook BRIGHTEN SKILLS EXCEL_101.pdf" target="_blank">Excel 101 Guide</a>
+                    <a href="materials/resources/EXCEL DATE AND TIME UNIT.pdf" target="_blank">Date & Time Functions</a>
+                    <a href="materials/resources/Excel Logical Formulas.pdf" target="_blank">Logical Formulas</a>
+                    <a href="materials/resources/excel practice.pdf" target="_blank">Practice Exercise 1</a>
+                    <a href="materials/resources/excel practice2.pdf" target="_blank">Practice Exercise 2</a>
+                </div>
+                <div class="material-item">
+                    <h3>Web Development</h3>
+                    <p>HTML and web development resources.</p>
+                    <a href="materials/resources/html color codes.pdf" target="_blank">HTML Color Codes</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="scrolling-text-container">
+             <div class="footer-content">
+                <p>Founder and CEO of BRIGHTEN SKILLS: Pallikonda Naresh</p>
+                <p>Contact Numbers: 8297209437, 7601045276</p>
+             </div>
+        </div>
+    </footer>
+
+    <!-- Add WhatsApp Floating Button -->
+    <a href="https://wa.me/918297209437" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+        <span class="whatsapp-tooltip">Chat with us on WhatsApp</span>
+    </a>
+
+    <div class="watermark">
+        <img src="images/logo.png" alt="BRIGHTEN SKILLS Watermark Logo">
+    </div>
+
+    <!-- Registration Modal -->
+    <div id="registrationModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeRegistrationModal()">&times;</span>
             <h2>Registration Forms</h2>
             
             <div class="form-container">
@@ -533,66 +637,6 @@
                 </form>
             </div>
         </div>
-
-        <div class="split-layout">
-            <div class="main-content">
-                <div class="youtube-container">
-                    <div class="button-container">
-                        <button onclick="openAdditionalVideo()" class="youtube-button">Watch Video</button>
-                        <button onclick="openEvivePlaylist()" class="youtube-button">Get started with your evive Starter Kit</button>
-                        <button onclick="openYouTubePlaylist()" class="youtube-button">AI& ML For KIds with Pictoblox</button>
-                        <button onclick="openBrightenSkillsBlocks()" class="youtube-button">Brighten Skills Blocks</button>
-                    </div>
-                    <p class="youtube-description">Click any button above to watch our content or explore our blocks page. The header and footer will remain visible while you interact with this page.</p>
-                </div>
-            </div>
-            <div class="materials-sidebar">
-                <h2>Learning Materials</h2>
-                <div class="material-item">
-                    <h3>Course Units</h3>
-                    <p>Comprehensive course materials organized by units.</p>
-                    <a href="materials/resources/UNIT 1.pdf" target="_blank">Unit 1</a>
-                    <a href="materials/resources/UNIT 2.pdf" target="_blank">Unit 2</a>
-                    <a href="materials/resources/UNIT 3.pdf" target="_blank">Unit 3</a>
-                    <a href="materials/resources/UNIT 4.pdf" target="_blank">Unit 4</a>
-                    <a href="materials/resources/UNIT 5.pdf" target="_blank">Unit 5</a>
-                    <a href="materials/resources/UNIT 6.pdf" target="_blank">Unit 6</a>
-                </div>
-                <div class="material-item">
-                    <h3>Excel Resources</h3>
-                    <p>Comprehensive Excel learning materials and practice files.</p>
-                    <a href="materials/resources/EBook BRIGHTEN SKILLS EXCEL_101.pdf" target="_blank">Excel 101 Guide</a>
-                    <a href="materials/resources/EXCEL DATE AND TIME UNIT.pdf" target="_blank">Date & Time Functions</a>
-                    <a href="materials/resources/Excel Logical Formulas.pdf" target="_blank">Logical Formulas</a>
-                    <a href="materials/resources/excel practice.pdf" target="_blank">Practice Exercise 1</a>
-                    <a href="materials/resources/excel practice2.pdf" target="_blank">Practice Exercise 2</a>
-                </div>
-                <div class="material-item">
-                    <h3>Web Development</h3>
-                    <p>HTML and web development resources.</p>
-                    <a href="materials/resources/html color codes.pdf" target="_blank">HTML Color Codes</a>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <footer>
-        <div class="scrolling-text-container">
-             <div class="footer-content">
-                <p>Founder and CEO of BRIGHTEN SKILLS: Pallikonda Naresh</p>
-                <p>Contact Numbers: 8297209437, 7601045276</p>
-             </div>
-        </div>
-    </footer>
-
-    <!-- Add WhatsApp Floating Button -->
-    <a href="https://wa.me/918297209437" class="whatsapp-float" target="_blank">
-        <i class="fab fa-whatsapp"></i>
-        <span class="whatsapp-tooltip">Chat with us on WhatsApp</span>
-    </a>
-
-    <div class="watermark">
-        <img src="images/logo.png" alt="BRIGHTEN SKILLS Watermark Logo">
     </div>
 
     <script>
@@ -606,6 +650,22 @@
         // Update date and time initially and every second
         updateDateTime();
         setInterval(updateDateTime, 1000);
+
+        function openRegistrationModal() {
+            document.getElementById('registrationModal').style.display = 'block';
+        }
+
+        function closeRegistrationModal() {
+            document.getElementById('registrationModal').style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('registrationModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
 
         function submitForm(event, formType) {
             event.preventDefault();
@@ -629,8 +689,9 @@
             // Open WhatsApp
             window.open(whatsappUrl, '_blank');
             
-            // Reset form
+            // Reset form and close modal
             form.reset();
+            closeRegistrationModal();
         }
     </script>
 </body>
