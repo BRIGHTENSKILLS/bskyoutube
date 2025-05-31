@@ -615,6 +615,8 @@
     </script>
     <!-- Add Font Awesome for WhatsApp icon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Add SheetJS library before closing head tag -->
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
 </head>
 <body>
     <header>
@@ -1068,21 +1070,60 @@
         function submitForm(event, formType) {
             event.preventDefault();
             
-            let formData = '';
-            let form = event.target;
+            const form = event.target;
+            const formData = {};
             
             // Collect form data
             const formElements = form.elements;
             for (let i = 0; i < formElements.length; i++) {
-                if (formElements[i].type !== 'submit') {
-                    formData += `${formElements[i].labels[0].textContent}: ${formElements[i].value}\n`;
+                const element = formElements[i];
+                if (element.type !== 'submit' && element.type !== 'file') {
+                    if (element.type === 'checkbox' || element.type === 'radio') {
+                        if (element.checked) {
+                            formData[element.name] = element.value;
+                        }
+                    } else {
+                        formData[element.labels[0].textContent] = element.value;
+                    }
                 }
             }
+
+            // Create Excel workbook
+            const wb = XLSX.utils.book_new();
+            
+            // Convert form data to worksheet
+            const ws = XLSX.utils.json_to_sheet([formData]);
+            
+            // Add worksheet to workbook
+            XLSX.utils.book_append_sheet(wb, ws, formType + "Registration");
+            
+            // Generate Excel file
+            const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+            const blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+            
+            // Create download link
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${formType}_registration_${new Date().toISOString().split('T')[0]}.xlsx`;
             
             // Create WhatsApp message
-            const message = `*New ${formType.charAt(0).toUpperCase() + formType.slice(1)} Registration*\n\n${formData}`;
+            let message = `*New ${formType.charAt(0).toUpperCase() + formType.slice(1)} Registration*\n\n`;
+            for (const [key, value] of Object.entries(formData)) {
+                message += `${key}: ${value}\n`;
+            }
+            
+            // Add note about Excel file
+            message += `\nAn Excel file has been generated with the registration details.`;
+            
             const encodedMessage = encodeURIComponent(message);
             const whatsappUrl = `https://wa.me/918297209437?text=${encodedMessage}`;
+            
+            // Download Excel file
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
             
             // Open WhatsApp
             window.open(whatsappUrl, '_blank');
