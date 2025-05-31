@@ -559,6 +559,54 @@
         .split-layout {
             margin-left: 250px;
         }
+
+        /* Add UPI Payment Button Styles */
+        .payment-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 20px 0;
+            width: 100%;
+            max-width: 400px;
+            text-align: left;
+        }
+
+        .payment-button:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .payment-button i {
+            font-size: 1.5rem;
+        }
+
+        .upi-details {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+        }
+
+        .upi-details p {
+            margin: 5px 0;
+            color: #666;
+        }
+
+        .upi-details .upi-id {
+            font-weight: bold;
+            color: #2c3e50;
+        }
     </style>
     <script>
         function openYouTubePlaylist() {
@@ -649,6 +697,16 @@
                         <button onclick="openEvivePlaylist()" class="youtube-button">Get started with your evive Starter Kit</button>
                         <button onclick="openYouTubePlaylist()" class="youtube-button">AI& ML For KIds with Pictoblox</button>
                         <button onclick="openBrightenSkillsBlocks()" class="youtube-button">Brighten Skills Blocks</button>
+                        
+                        <!-- Add Payment Button -->
+                        <button onclick="openUPIPayment()" class="payment-button">
+                            <i class="fas fa-rupee-sign"></i>
+                            Make Payment
+                        </button>
+                        <div class="upi-details">
+                            <p>UPI ID: <span class="upi-id">pallikondanrsh@ybl</span></p>
+                            <p>Name: BRIGHTEN SKILLS</p>
+                        </div>
                     </div>
                     <p class="youtube-description">Click any button above to watch our content or explore our blocks page. The header and footer will remain visible while you interact with this page.</p>
                 </div>
@@ -1072,12 +1130,23 @@
             
             const form = event.target;
             const formData = {};
+            let photoData = null;
             
             // Collect form data
             const formElements = form.elements;
             for (let i = 0; i < formElements.length; i++) {
                 const element = formElements[i];
-                if (element.type !== 'submit' && element.type !== 'file') {
+                if (element.type === 'file' && element.files.length > 0) {
+                    // Get photo data
+                    const file = element.files[0];
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        photoData = e.target.result;
+                        sendWhatsAppMessage(formData, photoData, formType);
+                    };
+                    reader.readAsDataURL(file);
+                    return; // Wait for photo to be read
+                } else if (element.type !== 'submit') {
                     if (element.type === 'checkbox' || element.type === 'radio') {
                         if (element.checked) {
                             formData[element.name] = element.value;
@@ -1088,48 +1157,34 @@
                 }
             }
 
-            // Create Excel workbook
-            const wb = XLSX.utils.book_new();
-            
-            // Convert form data to worksheet
-            const ws = XLSX.utils.json_to_sheet([formData]);
-            
-            // Add worksheet to workbook
-            XLSX.utils.book_append_sheet(wb, ws, formType + "Registration");
-            
-            // Generate Excel file
-            const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
-            const blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-            
-            // Create download link
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `${formType}_registration_${new Date().toISOString().split('T')[0]}.xlsx`;
-            
+            // If no photo, send message immediately
+            if (!photoData) {
+                sendWhatsAppMessage(formData, null, formType);
+            }
+        }
+
+        function sendWhatsAppMessage(formData, photoData, formType) {
             // Create WhatsApp message
             let message = `*New ${formType.charAt(0).toUpperCase() + formType.slice(1)} Registration*\n\n`;
+            
+            // Add form data to message
             for (const [key, value] of Object.entries(formData)) {
                 message += `${key}: ${value}\n`;
             }
-            
-            // Add note about Excel file
-            message += `\nAn Excel file has been generated with the registration details.`;
-            
+
+            // Add photo if available
+            if (photoData) {
+                message += `\n*Photo has been uploaded*`;
+            }
+
             const encodedMessage = encodeURIComponent(message);
             const whatsappUrl = `https://wa.me/918297209437?text=${encodedMessage}`;
-            
-            // Download Excel file
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            window.URL.revokeObjectURL(url);
             
             // Open WhatsApp
             window.open(whatsappUrl, '_blank');
             
             // Reset form and close modal
-            form.reset();
+            document.getElementById(formType + 'Form').reset();
             closeRegistrationModal();
         }
 
@@ -1156,6 +1211,11 @@
                 }
             });
         });
+
+        function openUPIPayment() {
+            const upiUrl = `upi://pay?pa=pallikondanrsh@ybl&pn=BRIGHTEN%20SKILLS&cu=INR`;
+            window.location.href = upiUrl;
+        }
     </script>
 </body>
 </html> 
