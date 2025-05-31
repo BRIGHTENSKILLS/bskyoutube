@@ -611,7 +611,8 @@
         /* Update responsive styles for mobile view */
         @media screen and (max-width: 768px) {
             body {
-                padding-top: 120px; /* Increased to accommodate stacked header */
+                padding-top: 0; /* Remove top padding */
+                margin-top: 0;
             }
 
             header {
@@ -619,12 +620,14 @@
                 padding: 10px;
                 flex-direction: column;
                 gap: 10px;
-                opacity: 1; /* Make header fully visible on mobile */
+                opacity: 1;
                 pointer-events: auto;
+                position: relative; /* Change from fixed to relative */
             }
 
             .logo {
-                max-height: 50px;
+                max-height: 80px; /* Increased logo size */
+                width: auto;
             }
 
             #datetime {
@@ -640,146 +643,88 @@
                 flex-direction: column;
             }
 
-            /* Adjust registration buttons for mobile */
-            .registration-buttons {
-                position: static;
-                width: 100%;
-                padding: 10px;
-                box-shadow: none;
-                border-bottom: 1px solid #ddd;
-            }
-
-            .registration-buttons h2 {
-                font-size: 1.2rem;
-                margin-bottom: 10px;
-            }
-
-            .reg-button {
-                padding: 10px;
-                font-size: 1rem;
-            }
-
             /* Adjust main content for mobile */
             .main-content {
                 padding: 10px;
                 margin: 0;
                 width: 100%;
+                display: block; /* Ensure content is visible */
             }
 
             .youtube-container {
                 padding: 10px;
                 width: 100%;
+                display: block; /* Ensure container is visible */
             }
 
             .button-container {
                 width: 100%;
                 max-width: none;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
             }
 
             .youtube-button {
                 padding: 15px 20px;
                 font-size: 1.2rem;
+                width: 100%;
+                display: block; /* Ensure button is visible */
+                white-space: normal; /* Allow text to wrap */
+                height: auto; /* Allow height to adjust */
+                min-height: 60px; /* Minimum height for touch */
+                text-align: left;
             }
 
             .youtube-description {
                 font-size: 1rem;
                 margin: 15px 0;
-            }
-
-            /* Adjust materials sidebar for mobile */
-            .materials-sidebar {
-                position: static;
+                display: block; /* Ensure description is visible */
                 width: 100%;
-                padding: 10px;
-                box-shadow: none;
-                border-top: 1px solid #ddd;
-            }
-
-            .materials-sidebar h2 {
-                font-size: 1.2rem;
-                margin-bottom: 15px;
-            }
-
-            .material-item {
-                padding: 10px;
-                margin-bottom: 10px;
-            }
-
-            /* Adjust modal for mobile */
-            .modal-content {
-                width: 95%;
-                margin: 20px auto;
-                padding: 15px;
-            }
-
-            .form-container {
-                padding: 10px;
-            }
-
-            .form-group {
-                margin-bottom: 10px;
-            }
-
-            .form-group label {
-                font-size: 0.9rem;
-            }
-
-            .form-group input, 
-            .form-group select, 
-            .form-group textarea {
-                padding: 6px;
-                font-size: 0.9rem;
-            }
-
-            /* Adjust footer for mobile */
-            footer {
-                position: static;
-                margin-top: 20px;
-                opacity: 1;
-                pointer-events: auto;
-            }
-
-            .footer-content p {
-                font-size: 0.9rem;
-            }
-
-            /* Adjust WhatsApp button for mobile */
-            .whatsapp-float {
-                bottom: 20px;
-                right: 20px;
-                width: 50px;
-                height: 50px;
-                font-size: 25px;
+                color: #333; /* Darker text for better visibility */
             }
 
             /* Adjust payment button for mobile */
             .payment-button {
-                padding: 12px 20px;
-                font-size: 1.1rem;
+                padding: 15px 20px;
+                font-size: 1.2rem;
+                width: 100%;
+                display: block;
+                white-space: normal;
+                height: auto;
+                min-height: 60px;
+                text-align: left;
+            }
+
+            /* Ensure all text is visible */
+            .youtube-button, .payment-button, .youtube-description {
+                opacity: 1;
+                visibility: visible;
+                overflow: visible;
             }
         }
 
         /* Additional breakpoint for very small screens */
         @media screen and (max-width: 480px) {
             body {
-                padding-top: 100px;
+                padding-top: 0;
             }
 
             .logo {
-                max-height: 40px;
+                max-height: 70px; /* Slightly smaller for very small screens */
             }
 
             #datetime {
                 font-size: 0.8rem;
             }
 
-            .youtube-button {
+            .youtube-button, .payment-button {
                 padding: 12px 15px;
                 font-size: 1.1rem;
+                min-height: 50px;
             }
 
-            .reg-button {
-                padding: 8px;
+            .youtube-description {
                 font-size: 0.9rem;
             }
         }
