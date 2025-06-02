@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrations</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f5f6fa;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        #registrationData {
+            margin-top: 20px;
+        }
+        .registration-entry {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+        }
+        .registration-entry h3 {
+            margin-top: 0;
+            color: #3498db;
+        }
+        .registration-entry p {
+            margin-bottom: 5px;
+        }
+        .registration-actions {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+        }
+        .registration-actions button {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        .edit-button {
+            background-color: #f39c12;
+            color: white;
+        }
+        .edit-button:hover {
+            background-color: #e67e22;
+        }
+        .delete-button {
+            background-color: #e74c3c;
+            color: white;
+        }
+        .delete-button:hover {
+            background-color: #c0392b;
+        }
+        .excel-button {
+            background-color: #27ae60;
+            color: white;
+            margin-left: 10px;
+        }
+        .excel-button:hover {
+            background-color: #229954;
+        }
+        .pdf-button {
+            background-color: #e74c3c;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-top: 20px;
+        }
+        .pdf-button:hover {
+            background-color: #c0392b;
+        }
+        #passwordPrompt {
+            margin-bottom: 20px;
+        }
+        #passwordPrompt input {
+            padding: 8px;
+            margin-right: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        #passwordPrompt button {
+            padding: 8px 15px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        #passwordPrompt button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Registered Information</h1>
+        <div id="passwordPrompt">
+            <label for="password">Enter Password:</label>
+            <input type="password" id="password">
+            <button onclick="checkPassword()">Submit</button>
+        </div>
+        <div id="registrationData" style="display: none;">
+            <!-- Registration data will be loaded here -->
+        </div>
+         <button class="pdf-button" onclick="generatePDF()" style="display: none;">Generate PDF</button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+    <script>
+        // !!! IMPORTANT: This is a client-side password check and is NOT secure. !!!
+        // Anyone can view the source code to find the password.
+        const correctPassword = "Datapro@3686"; // **CHANGE THIS PASSWORD IN A REAL APPLICATION**
+
+        function checkPassword() {
+            const enteredPassword = document.getElementById('password').value;
+            if (enteredPassword === correctPassword) {
+                document.getElementById('passwordPrompt').style.display = 'none';
+                document.getElementById('registrationData').style.display = 'block';
+                document.querySelector('.pdf-button').style.display = 'block';
+                loadRegistrationData();
+            } else {
+                alert('Incorrect password.');
+            }
+        }
+
+        function loadRegistrationData() {
+            const dataContainer = document.getElementById('registrationData');
+            // Retrieve data from localStorage
+            const registrationInfo = JSON.parse(localStorage.getItem('registrationInfo') || '[]');
+
+            if (registrationInfo.length === 0) {
+                dataContainer.innerHTML = '<p>No registration data found.</p>';
+                return;
+            }
+
+            dataContainer.innerHTML = ''; // Clear previous data
+            registrationInfo.forEach((entry, index) => {
+                const entryDiv = document.createElement('div');
+                entryDiv.classList.add('registration-entry');
+                entryDiv.innerHTML = `
+                    <h3>Entry ${index + 1} (${entry.formType})</h3>
+                `;
+                for (const key in entry.data) {
+                    entryDiv.innerHTML += `<p><strong>${key}:</strong> ${entry.data[key]}</p>`;
+                }
+                 if(entry.photo) {
+                     const img = document.createElement('img');
+                     img.src = entry.photo;
+                     img.style.maxWidth = '200px';
+                     img.style.maxHeight = '200px';
+                     entryDiv.appendChild(img);
+                     entryDiv.innerHTML += '<p><em>Photo included.</em></p>'; // Indicate photo presence
+                 }
+                // Add Edit, Delete, and Excel buttons
+                entryDiv.innerHTML += `
+                    <div class="registration-actions">
+                        <button class="edit-button" onclick="editRegistration(${index})">Edit</button>
+                        <button class="delete-button" onclick="deleteRegistration(${index})">Delete</button>
+                        <button class="excel-button" onclick="generateExcel(${index})">Export to Excel</button>
+                    </div>
+                `;
+                dataContainer.appendChild(entryDiv);
+            });
+        }
+
+        // Placeholder functions for edit and delete - client-side only
+        function editRegistration(index) {
+            alert('Edit functionality is not fully implemented in this client-side version.');
+            // In a real application, you would load the data into a form for editing
+            // and update localStorage after saving.
+             const registrationInfo = JSON.parse(localStorage.getItem('registrationInfo') || '[]');
+             const entryToEdit = registrationInfo[index];
+             console.log('Attempting to edit:', entryToEdit);
+             // Example: Populate a modal or form with entryToEdit.data
+        }
+
+        function deleteRegistration(index) {
+            if (confirm('Are you sure you want to delete this registration?')) {
+                const registrationInfo = JSON.parse(localStorage.getItem('registrationInfo') || '[]');
+                // Remove the entry at the specified index
+                registrationInfo.splice(index, 1);
+                // Save the updated data back to localStorage
+                localStorage.setItem('registrationInfo', JSON.stringify(registrationInfo));
+                // Reload the displayed data
+                loadRegistrationData();
+            }
+        }
+
+        function generateExcel(index) {
+            const registrationInfo = JSON.parse(localStorage.getItem('registrationInfo') || '[]');
+            const entry = registrationInfo[index];
+            
+            let data = [];
+            data.push(['Field', 'Value']); // Header row
+            
+            for (const key in entry.data) {
+                data.push([key, entry.data[key]]);
+            }
+
+            if (entry.photo) {
+                data.push(['Photo', 'Photo included (viewable in browser)']);
+            }
+
+            const ws = XLSX.utils.aoa_to_sheet(data);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, 'Registration Data');
+
+            const formType = entry.formType.charAt(0).toUpperCase() + entry.formType.slice(1);
+            const filename = `${formType}_Registration_${index + 1}.xlsx`;
+
+            XLSX.writeFile(wb, filename);
+        }
+
+        function generatePDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            const dataContainer = document.getElementById('registrationData');
+
+            // Use a temporary element to render HTML for PDF generation
+            const printElement = document.createElement('div');
+            printElement.innerHTML = dataContainer.innerHTML; // Get the HTML content to be printed
+            printElement.style.padding = '20px'; // Add some padding for appearance
+            printElement.style.backgroundColor = '#fff'; // Set background for rendering
+
+            // Append to body temporarily for rendering
+            document.body.appendChild(printElement);
+
+            html2canvas(printElement, { scale: 2 }).then(canvas => { // Increased scale for better quality
+                const imgData = canvas.toDataURL('image/png');
+                const imgWidth = 210; // A4 width in mm
+                const pageHeight = 297; // A4 height in mm
+                const imgHeight = canvas.height * imgWidth / canvas.width;
+                let heightLeft = imgHeight;
+
+                let position = 0;
+
+                doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+
+                while (heightLeft > 0) { // Use > 0 for check
+                    position = -heightLeft; // Adjust position for the next page
+                    doc.addPage();
+                    doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                    heightLeft -= pageHeight;
+                }
+
+                doc.save('registrations.pdf');
+            }).finally(() => {
+                 // Clean up the temporary element
+                 document.body.removeChild(printElement);
+            });
+        }
+
+        // Load data when page is accessed after password check
+        // loadRegistrationData(); // Will be called after password check
+    </script>
+</body>
+</html> 
