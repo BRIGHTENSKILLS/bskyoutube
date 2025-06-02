@@ -608,6 +608,7 @@
                 min-height: 100vh;
                 overflow-x: hidden;
                 position: relative;
+                padding-left: 0; /* Remove left padding for fixed sidebar on mobile */
             }
 
             header {
@@ -618,13 +619,15 @@
                 margin: 0;
                 height: auto;
                 overflow-y: auto;
-                padding: 0;
+                padding: 0 15px; /* Add some horizontal padding */
             }
 
             .split-layout {
                 height: auto;
                 min-height: calc(100vh - 130px);
                 flex-direction: column; /* Stack elements on mobile */
+                max-width: 100%; /* Allow to take full width */
+                margin: 0; /* Remove centering margin */
             }
 
             .registration-buttons,
@@ -638,19 +641,24 @@
                  top: auto;
                  bottom: auto;
                  flex-shrink: 0;
-                 order: initial; /* Reset order for mobile stacking */
+                 /* Order handled by explicit order below */
             }
 
             .registration-buttons {
                 order: 1;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Add a subtle shadow */
+                margin-bottom: 15px; /* Add space below the buttons */
             }
 
             .main-content {
                 order: 2;
+                padding: 15px; /* Ensure consistent padding */
             }
 
             .materials-sidebar {
                 order: 3;
+                box-shadow: 0 -2px 5px rgba(0,0,0,0.1); /* Add a subtle shadow above */
+                margin-top: 15px; /* Add space above the materials */
             }
 
             .youtube-container {
@@ -660,8 +668,20 @@
             }
 
             .video-container {
-                height: 300px;
+                height: auto; /* Allow height to adjust */
+                padding-top: 56.25%; /* 16:9 aspect ratio */
+                position: relative;
+                overflow: hidden; /* Hide overflow */
                 max-width: 100%;
+                margin-bottom: 15px; /* Add space below video */
+            }
+
+            .video-container iframe {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
             }
 
             .button-container {
@@ -678,7 +698,7 @@
             }
 
             footer {
-                height: 50px;
+                height: 40px;
             }
         }
 
@@ -692,10 +712,18 @@
             }
             main {
                  margin-top: 0;
+                padding: 0 10px; /* Slightly less padding on very small screens */
             }
             .split-layout {
                  min-height: calc(100vh - 110px);
             }
+            
+            .registration-buttons,
+            .main-content,
+            .materials-sidebar {
+                padding: 10px; /* Slightly less padding */
+            }
+            
             footer {
                  height: 40px;
             }
