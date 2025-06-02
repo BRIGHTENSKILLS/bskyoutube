@@ -17,14 +17,16 @@
             display: flex;
             flex-direction: column;
             background-color: #f5f6fa;
-            height: 100vh; /* Ensure body takes full viewport height */
-            padding-top: 80px; /* Add padding equal to header height */
-            margin-top: 0;
-            padding-top: 0;
+            padding-top: 80px; /* Space for fixed header */
+            padding-bottom: 40px; /* Space for fixed footer */
+            padding-left: 250px; /* Add padding for fixed left sidebar */
+            margin: 0;
+            overflow-x: hidden;
+            position: relative;
         }
 
         header {
-            background-color: #2c3e50;
+            background-color: Tomato;
             color: white;
             padding: 0 20px;
             text-align: center;
@@ -38,9 +40,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
-            opacity: 0.6;
-            pointer-events: none;
+            opacity: 1;
+            pointer-events: auto;
         }
 
         header h1 {
@@ -94,151 +95,105 @@
 
         main {
             flex: 1;
-            /* margin-top: 80px; */ /* Removed space for fixed header */
-            margin-bottom: 0; /* Remove potentially interfering margin */
-            /* min-height: calc(100vh - 80px); */ /* Removed */
             position: relative;
-            overflow: hidden;
+            overflow-y: auto; /* Allow main content area to scroll */
+            display: flex; /* Main itself is a flex container */
+            flex-direction: column; /* Stack direct children of main vertically */
+            /* padding-top and padding-bottom handled by body padding */
         }
 
-        .content-frame {
+        .split-layout {
+            display: flex; /* Enable Flexbox for side-by-side layout */
+            flex-direction: row; /* Arrange items in a row */
             width: 100%;
-            height: 100%;
-            border: none;
-            position: absolute;
-            top: 0;
-            left: 0;
+            max-width: 1000px; /* Decrease max width */
+            margin: 0 auto; /* Center the layout */
+            flex: 1; /* Allow split-layout to take available height in main column */
+            box-sizing: border-box;
+            /* height is determined by content within flex items */
+            /* Remove fixed positioning margins if they exist */
+            padding: 0;
         }
 
-        footer {
-            background-color: #2c3e50;
-            color: white;
-            padding: 20px 0;
-            text-align: center;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            box-shadow: 0 -4px 6px rgba(0,0,0,0.1);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            overflow: hidden;
-            opacity: 0.6;
-            pointer-events: none;
-            /* Removed fixed height */
-        }
-
-        footer p {
-            margin: 0 15px;
-            font-size: 1.1rem;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
-            display: inline-block;
-        }
-
-        .scrolling-text-container {
-            width: 100%;
-            white-space: nowrap;
-            animation: scroll-right-to-left 25s linear infinite;
-            display: inline-block;
-        }
-
-        @keyframes scroll-right-to-left {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
-        }
-
-        .footer-content {
-            display: inline-block;
-        }
-
-        .youtube-container {
-            text-align: left;
+        .registration-buttons {
+            width: 250px; /* Fixed width for left sidebar */
+            background-color: #fff;
             padding: 20px;
-            max-width: 800px;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: flex-start;
-            gap: 20px;
-        }
-
-        .button-container {
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            overflow-y: auto; /* Allow sidebar to scroll */
+            z-index: 950; /* Ensure it's above main content but below header/footer */
             display: flex;
             flex-direction: column;
             gap: 15px;
-            width: 100%;
-            max-width: 400px;
-            margin: 0;
-            align-items: flex-start;
+            flex-shrink: 0; /* Prevent shrinking */
+            position: fixed; /* Use fixed positioning */
+            top: 80px; /* Position below the header */
+            bottom: 40px; /* Extend to the top of the footer */
+            left: 0; /* Position on the left edge */
         }
 
-        .youtube-button {
-            display: inline-block;
-            padding: 20px 40px;
-            background-color: #ff0000;
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
+        .registration-buttons h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
             font-size: 1.5rem;
+            text-align: center;
+        }
+
+        .reg-button {
+            background-color: #3498db;
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
             font-weight: bold;
             transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            width: 100%;
-            text-align: left;
-            max-width: 400px;
-        }
-
-        .youtube-button:hover {
-            background-color: #cc0000;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
-        }
-
-        .youtube-description {
-            color: #666;
-            font-size: 1.2rem;
-            line-height: 1.6;
-            margin: 20px 0;
-            max-width: 600px;
-            text-align: left;
-        }
-
-        /* Add new styles for the split layout */
-        .split-layout {
             display: flex;
+            align-items: center;
+            gap: 10px;
+            text-align: left;
             width: 100%;
-            height: 100%;
-            margin-left: 0; /* Remove the left margin */
+        }
+
+        .reg-button:hover {
+            background-color: #2980b9;
+            transform: translateX(5px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .reg-button i {
+            font-size: 1.2rem;
         }
 
         .main-content {
-            flex: 1;
+            flex: 1; /* Allow main content to grow and shrink */
             padding: 20px;
-            overflow-y: auto;
-            margin-right: 300px;
+            overflow-y: visible; /* Scrolling controlled by main */
             display: flex;
+            flex-direction: column;
             justify-content: flex-start;
-            align-items: center;
-            padding-left: 50px;
+            align-items: center; /* Center children horizontally */
+            padding-top: 0;
+            padding-bottom: 0;
+            position: relative; /* Use relative positioning */
+            margin: 0; /* Ensure no extra margin here */
+            order: 2; /* Explicitly set order for Flexbox */
         }
 
         .materials-sidebar {
-            width: 300px;
+            width: 250px; /* Fixed width for right sidebar */
             background-color: #fff;
             padding: 20px;
             box-shadow: -2px 0 5px rgba(0,0,0,0.1);
-            position: fixed;
-            right: 0;
-            top: 80px;
-            bottom: 0;
-            overflow-y: auto;
-            z-index: 900;
+            overflow-y: auto; /* Allow sidebar to scroll */
+            z-index: 950; /* Ensure it's above main content but below header/footer */
+            flex-shrink: 0; /* Prevent shrinking */
+            position: relative; /* Use relative positioning */
+            top: auto;
+            bottom: auto;
+            right: auto;
+            order: 3; /* Explicitly set order for Flexbox */
         }
 
         .materials-sidebar h2 {
@@ -280,6 +235,98 @@
         .material-item a:hover {
             color: #2980b9;
             text-decoration: underline;
+        }
+
+        .youtube-container {
+            width: 100%;
+            max-width: 900px; /* Increased max width */
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin: 20px 0; /* Keep existing margins */
+            align-items: center; /* Center content inside youtube-container */
+        }
+
+        .video-container {
+            width: 100%;
+            max-width: 900px; /* Increased max width to match container */
+            height: 506px; /* Increased height (approx 16:9 for 900px width) */
+            position: relative;
+            margin-bottom: 0;
+        }
+
+        .content-frame {
+            width: 100%; /* Make iframe fill container width */
+            height: 100%; /* Make iframe fill container height */
+            border: none; /* Remove default iframe border */
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 100%;
+            max-width: 500px;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        .youtube-description {
+            color: #666;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin: 0;
+            max-width: 500px;
+            text-align: left;
+            margin-bottom: 20px;
+            margin-top: 20px;
+        }
+
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 -4px 6px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            overflow: hidden;
+            opacity: 1;
+            pointer-events: auto;
+            height: 40px;
+        }
+
+        footer p {
+            margin: 0 15px;
+            font-size: 0.9rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+            display: inline-block;
+            white-space: nowrap;
+        }
+
+        .scrolling-text-container {
+            width: 100%;
+            white-space: nowrap;
+            animation: scroll-right-to-left 25s linear infinite;
+            display: inline-block;
+            padding: 5px 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        @keyframes scroll-right-to-left {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        .footer-content {
+            display: inline-block;
         }
 
         /* WhatsApp Floating Button Styles */
@@ -504,62 +551,6 @@
             line-height: 1.4;
         }
 
-        /* Left Side Registration Buttons */
-        .registration-buttons {
-            width: 250px;
-            background-color: #fff;
-            padding: 20px;
-            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-            position: fixed;
-            left: 0;
-            top: 80px;
-            bottom: 0;
-            overflow-y: auto;
-            z-index: 900;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .registration-buttons h2 {
-            color: #2c3e50;
-            margin-bottom: 20px;
-            font-size: 1.5rem;
-            text-align: center;
-        }
-
-        .reg-button {
-            background-color: #3498db;
-            color: white;
-            padding: 15px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1.1rem;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            text-align: left;
-            width: 100%;
-        }
-
-        .reg-button:hover {
-            background-color: #2980b9;
-            transform: translateX(5px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-        }
-
-        .reg-button i {
-            font-size: 1.2rem;
-        }
-
-        /* Adjust main content margin */
-        .split-layout {
-            margin-left: 250px;
-        }
-
         /* Add UPI Payment Button Styles */
         .payment-button {
             background-color: #4CAF50;
@@ -611,262 +602,152 @@
         /* Update responsive styles for mobile view */
         @media screen and (max-width: 768px) {
             body {
-                padding-top: 0;
-                margin-top: 0;
-                overflow-x: hidden;
+                padding-top: 80px;
+                padding-bottom: 50px;
+                height: auto;
                 min-height: 100vh;
-                display: flex;
-                flex-direction: column;
+                overflow-x: hidden;
+                position: relative;
             }
 
             header {
-                position: relative;
-                height: auto;
-                padding: 10px;
-                opacity: 1;
-                pointer-events: auto;
-                width: 100%;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                gap: 10px;
-                z-index: 100;
-            }
-
-            .logo {
-                max-height: 80px;
-                width: auto;
-            }
-
-            #datetime {
-                position: static;
-                transform: none;
-                font-size: 0.9rem;
-                margin-top: 5px;
+                height: 80px;
             }
 
             main {
-                flex: 1;
-                display: flex;
-                flex-direction: column;
-                width: 100%;
                 margin: 0;
+                height: auto;
+                overflow-y: auto;
                 padding: 0;
-                position: relative;
-                overflow: visible;
             }
 
-            /* Reset all fixed positioning for mobile */
+            .split-layout {
+                height: auto;
+                min-height: calc(100vh - 130px);
+                flex-direction: column; /* Stack elements on mobile */
+            }
+
             .registration-buttons,
             .materials-sidebar,
             .main-content {
-                position: static !important;
-                width: 100% !important;
-                margin: 0 !important;
-                padding: 15px !important;
-                left: 0 !important;
-                right: 0 !important;
-                transform: none !important;
-                display: block !important;
+                 position: relative;
+                 width: 100%; /* Full width on mobile */
+                 margin: 0;
+                 padding: 15px;
+                 box-shadow: none;
+                 top: auto;
+                 bottom: auto;
+                 flex-shrink: 0;
+                 order: initial; /* Reset order for mobile stacking */
             }
 
-            /* Adjust main layout for mobile */
-            .split-layout {
-                margin: 0 !important;
-                padding: 0 !important;
-                display: flex !important;
-                flex-direction: column !important;
-                width: 100% !important;
-                position: relative !important;
-                overflow: visible !important;
-            }
-
-            /* Registration buttons section */
             .registration-buttons {
                 order: 1;
-                background: #fff;
-                border-bottom: 1px solid #ddd;
-                padding: 15px !important;
-                display: block !important;
-                position: relative !important;
-                z-index: 1;
             }
 
-            .registration-buttons h2 {
-                font-size: 1.2rem;
-                margin-bottom: 15px;
-                text-align: center;
-            }
-
-            .reg-button {
-                width: 100% !important;
-                margin-bottom: 10px !important;
-                padding: 15px !important;
-                font-size: 1.1rem !important;
-                display: flex !important;
-                align-items: center !important;
-                justify-content: flex-start !important;
-            }
-
-            /* Main content section */
             .main-content {
                 order: 2;
-                padding: 15px !important;
-                background: #fff;
-                display: block !important;
-                position: relative !important;
-                z-index: 1;
+            }
+
+            .materials-sidebar {
+                order: 3;
             }
 
             .youtube-container {
-                width: 100% !important;
-                padding: 0 !important;
-                display: block !important;
-                position: relative !important;
+                margin-bottom: 15px;
+                margin-top: 0;
+                max-width: 100%;
+            }
+
+            .video-container {
+                height: 300px;
+                max-width: 100%;
             }
 
             .button-container {
-                width: 100% !important;
-                display: flex !important;
-                flex-direction: column !important;
-                gap: 15px !important;
-                position: relative !important;
-            }
-
-            .youtube-button {
-                width: 100% !important;
-                padding: 15px !important;
-                font-size: 1.1rem !important;
-                white-space: normal !important;
-                height: auto !important;
-                min-height: 60px !important;
-                text-align: left !important;
-                margin-bottom: 10px !important;
-                display: flex !important;
-                align-items: center !important;
-                justify-content: flex-start !important;
+                margin-top: 0;
+                margin-bottom: 15px;
+                max-width: 100%;
             }
 
             .youtube-description {
-                width: 100% !important;
-                font-size: 1rem !important;
-                margin: 15px 0 !important;
-                color: #333 !important;
-                display: block !important;
-                text-align: left !important;
+                 margin-top: 0;
+                 margin-bottom: 15px;
+                 max-width: 100%;
+                 text-align: center;
             }
 
-            /* Payment button */
-            .payment-button {
-                width: 100% !important;
-                padding: 15px !important;
-                font-size: 1.1rem !important;
-                white-space: normal !important;
-                height: auto !important;
-                min-height: 60px !important;
-                text-align: left !important;
-                margin: 10px 0 !important;
-                display: flex !important;
-                align-items: center !important;
-                justify-content: flex-start !important;
-            }
-
-            /* Materials sidebar */
-            .materials-sidebar {
-                order: 3;
-                background: #fff;
-                border-top: 1px solid #ddd;
-                margin-top: 10px;
-                padding: 15px !important;
-                display: block !important;
-                position: relative !important;
-                z-index: 1;
-            }
-
-            .materials-sidebar h2 {
-                font-size: 1.2rem;
-                margin-bottom: 15px;
-                text-align: center;
-            }
-
-            .material-item {
-                margin-bottom: 15px;
-                padding: 15px;
-                background: #f8f9fa;
-                border-radius: 8px;
-            }
-
-            /* Footer adjustments */
             footer {
-                position: static;
-                margin-top: auto;
-                opacity: 1;
-                pointer-events: auto;
-                width: 100%;
-                padding: 15px 0;
-                z-index: 1;
-            }
-
-            /* WhatsApp button */
-            .whatsapp-float {
-                bottom: 20px;
-                right: 20px;
-                width: 50px;
                 height: 50px;
-                font-size: 25px;
-                z-index: 1000;
-            }
-
-            /* Modal adjustments */
-            .modal-content {
-                width: 95%;
-                margin: 20px auto;
-                padding: 15px;
-            }
-
-            /* Remove any fixed positioning that might cause overlap */
-            .registration-buttons,
-            .materials-sidebar,
-            .main-content,
-            .youtube-container,
-            .button-container,
-            .youtube-button,
-            .payment-button,
-            .youtube-description {
-                transform: none !important;
-                left: 0 !important;
-                right: 0 !important;
-                top: auto !important;
-                bottom: auto !important;
-            }
-
-            /* Ensure content is not hidden */
-            .watermark {
-                display: none;
             }
         }
 
-        /* Additional breakpoint for very small screens */
-        @media screen and (max-width: 480px) {
-            .logo {
-                max-height: 70px;
+         @media screen and (max-width: 480px) {
+            body {
+                padding-top: 70px;
+                padding-bottom: 40px;
             }
+            header {
+                 height: 70px;
+            }
+            main {
+                 margin-top: 0;
+            }
+            .split-layout {
+                 min-height: calc(100vh - 110px);
+            }
+            footer {
+                 height: 40px;
+            }
+        }
 
-            .youtube-button,
-            .payment-button,
-            .reg-button {
-                padding: 12px !important;
-                font-size: 1rem !important;
-                min-height: 50px !important;
-            }
+        .youtube-button {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            background: linear-gradient(135deg, #ff0000, #cc0000);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            width: 100%;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
 
-            .youtube-description {
-                font-size: 0.9rem !important;
-            }
+        .youtube-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+            background: linear-gradient(135deg, #cc0000, #ff0000);
+        }
 
-            .material-item {
-                padding: 10px;
-            }
+        .youtube-button i {
+            margin-right: 15px;
+            font-size: 1.4rem;
+        }
+
+        .youtube-button::after {
+            content: '';
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>');
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.8;
+        }
+
+        .youtube-button:hover::after {
+            opacity: 1;
         }
     </style>
     <script>
@@ -915,7 +796,7 @@
             const main = document.querySelector('main');
             main.innerHTML = `
                 <iframe class="content-frame" 
-                    src="https://www.youtube.com/embed/z3STNuExQZU?si=h5ktAsRGPB_FxHnL" 
+                    src="https://www.youtube.com/embed/z3STNuExQZU?si=h5ktAsRGPB_FxHnL&autoplay=1&mute=1" 
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                     allowfullscreen>
                 </iframe>
@@ -926,6 +807,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- Add SheetJS library before closing head tag -->
     <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+    <!-- Add jsPDF library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
     <header>
@@ -933,31 +816,50 @@
         <div id="datetime"></div>
     </header>
 
-    <main>
-        <div class="registration-buttons">
-            <h2>Registration</h2>
-            <button onclick="openRegistrationModal('student')" class="reg-button">
-                <i class="fas fa-user-graduate"></i>
-                Student Registration
-            </button>
-            <button onclick="openRegistrationModal('teacher')" class="reg-button">
-                <i class="fas fa-chalkboard-teacher"></i>
-                Teacher Registration
-            </button>
-            <button onclick="openRegistrationModal('school')" class="reg-button">
-                <i class="fas fa-school"></i>
-                School Registration
-            </button>
-        </div>
+    <div class="registration-buttons">
+        <h2>Registration</h2>
+        <button onclick="openRegistrationModal('student')" class="reg-button">
+            <i class="fas fa-user-graduate"></i>
+            Student Registration
+        </button>
+        <button onclick="openRegistrationModal('teacher')" class="reg-button">
+            <i class="fas fa-chalkboard-teacher"></i>
+            Teacher Registration
+        </button>
+        <button onclick="openRegistrationModal('school')" class="reg-button">
+            <i class="fas fa-school"></i>
+            School Registration
+        </button>
+        <button onclick="window.location.href='registrations.html'" class="reg-button">
+            <i class="fas fa-list-alt"></i>
+            View Registrations
+        </button>
+    </div>
 
+    <main>
         <div class="split-layout">
             <div class="main-content">
-                <div class="youtube-container">
-                    <div class="button-container">
-                        <button onclick="openAdditionalVideo()" class="youtube-button">Watch Video</button>
-                        <button onclick="openEvivePlaylist()" class="youtube-button">Get started with your evive Starter Kit</button>
-                        <button onclick="openYouTubePlaylist()" class="youtube-button">AI& ML For KIds with Pictoblox</button>
-                        <button onclick="openBrightenSkillsBlocks()" class="youtube-button">Brighten Skills Blocks</button>
+        <div class="youtube-container">
+                    <div class="video-container">
+                        <iframe class="content-frame" 
+                            src="https://www.youtube.com/embed/z3STNuExQZU?si=h5ktAsRGPB_FxHnL&autoplay=1&mute=1" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+            <div class="button-container">
+                        <button onclick="openEvivePlaylist()" class="youtube-button">
+                            <i class="fas fa-robot"></i>
+                            Get started with your evive Starter Kit
+                        </button>
+                        <button onclick="openYouTubePlaylist()" class="youtube-button">
+                            <i class="fas fa-brain"></i>
+                            AI& ML For KIds with Pictoblox
+                        </button>
+                        <button onclick="openBrightenSkillsBlocks()" class="youtube-button">
+                            <i class="fas fa-cubes"></i>
+                            Brighten Skills Blocks
+                        </button>
                         
                         <!-- Add Payment Button -->
                         <button onclick="openUPIPayment()" class="payment-button">
@@ -967,7 +869,7 @@
                         <div class="upi-details" style="display: none;">
                             <p>UPI ID: <span class="upi-id">pallikondanrsh@ybl</span></p>
                             <p>Name: BRIGHTEN SKILLS</p>
-                        </div>
+            </div>
                     </div>
                     <p class="youtube-description">Click any button above to watch our content or explore our blocks page.</p>
                 </div>
@@ -1037,17 +939,17 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="studentName">Full Name</label>
+                        <label for="studentName">Full Name *</label>
                         <input type="text" id="studentName" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="studentDOB">Date of Birth</label>
+                        <label for="studentDOB">Date of Birth *</label>
                         <input type="date" id="studentDOB" required>
                     </div>
 
                     <div class="form-group">
-                        <label>Gender</label>
+                        <label>Gender *</label>
                         <div class="radio-group">
                             <label class="radio-option">
                                 <input type="radio" name="studentGender" value="male" required> Male
@@ -1062,37 +964,37 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="studentClass">Class / Grade</label>
+                        <label for="studentClass">Class / Grade *</label>
                         <input type="text" id="studentClass" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="parentName">Parent/Guardian Name</label>
+                        <label for="parentName">Parent/Guardian Name *</label>
                         <input type="text" id="parentName" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="studentAddress">Address</label>
+                        <label for="studentAddress">Address *</label>
                         <textarea id="studentAddress" required></textarea>
                     </div>
 
                     <div class="form-group">
-                        <label for="studentContact">Contact Number</label>
+                        <label for="studentContact">Contact Number *</label>
                         <input type="tel" id="studentContact" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="studentEmail">Email Address</label>
+                        <label for="studentEmail">Email Address *</label>
                         <input type="email" id="studentEmail" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="studentEmergency">Emergency Contact Number</label>
+                        <label for="studentEmergency">Emergency Contact Number *</label>
                         <input type="tel" id="studentEmergency" required>
                     </div>
 
                     <div class="form-group">
-                        <label>Preferred Course(s)</label>
+                        <label>Preferred Course(s) *</label>
                         <div class="checkbox-group">
                             <label class="checkbox-option">
                                 <input type="checkbox" name="studentCourses" value="basic"> Basic Computer Skills
@@ -1112,13 +1014,13 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="studentRegDate">Date of Registration</label>
+                        <label for="studentRegDate">Date of Registration *</label>
                         <input type="date" id="studentRegDate" required>
                     </div>
 
                     <div class="declaration">
                         <div class="declaration-checkbox">
-                            <input type="checkbox" id="studentDeclaration" required>
+                            <input type="checkbox" id="studentDeclaration" required> * 
                             <span class="declaration-text">
                                 I confirm that the information provided above is true and accurate to the best of my knowledge.
                             </span>
@@ -1140,17 +1042,17 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="teacherName">Full Name</label>
+                        <label for="teacherName">Full Name *</label>
                         <input type="text" id="teacherName" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="teacherDOB">Date of Birth</label>
+                        <label for="teacherDOB">Date of Birth *</label>
                         <input type="date" id="teacherDOB" required>
                     </div>
 
                     <div class="form-group">
-                        <label>Gender</label>
+                        <label>Gender *</label>
                         <div class="radio-group">
                             <label class="radio-option">
                                 <input type="radio" name="teacherGender" value="male" required> Male
@@ -1165,53 +1067,53 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="teacherAddress">Address</label>
+                        <label for="teacherAddress">Address *</label>
                         <textarea id="teacherAddress" required></textarea>
                     </div>
 
                     <div class="form-group">
-                        <label for="teacherContact">Contact Number</label>
+                        <label for="teacherContact">Contact Number *</label>
                         <input type="tel" id="teacherContact" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="teacherEmail">Email Address</label>
+                        <label for="teacherEmail">Email Address *</label>
                         <input type="email" id="teacherEmail" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="teacherQualification">Highest Qualification</label>
+                        <label for="teacherQualification">Highest Qualification *</label>
                         <input type="text" id="teacherQualification" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="teacherSubjects">Subjects/Courses Taught</label>
+                        <label for="teacherSubjects">Subjects/Courses Taught *</label>
                         <textarea id="teacherSubjects" required></textarea>
                     </div>
 
                     <div class="form-group">
-                        <label for="teacherExperience">Years of Teaching Experience</label>
+                        <label for="teacherExperience">Years of Teaching Experience *</label>
                         <input type="number" id="teacherExperience" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="teacherAvailability">Availability (Days/Times)</label>
+                        <label for="teacherAvailability">Availability (Days/Times) *</label>
                         <textarea id="teacherAvailability" required></textarea>
                     </div>
 
                     <div class="form-group">
-                        <label for="teacherEmergency">Emergency Contact Number</label>
+                        <label for="teacherEmergency">Emergency Contact Number *</label>
                         <input type="tel" id="teacherEmergency" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="teacherJoinDate">Date of Joining</label>
+                        <label for="teacherJoinDate">Date of Joining *</label>
                         <input type="date" id="teacherJoinDate" required>
                     </div>
 
                     <div class="declaration">
                         <div class="declaration-checkbox">
-                            <input type="checkbox" id="teacherDeclaration" required>
+                            <input type="checkbox" id="teacherDeclaration" required> * 
                             <span class="declaration-text">
                                 I confirm that the information provided above is true and accurate to the best of my knowledge.
                             </span>
@@ -1228,40 +1130,40 @@
                 <form onsubmit="submitForm(event, 'school')">
                     <div class="photo-upload">
                         <i class="fas fa-camera"></i>
-                        <p>Click to upload school/institution photo</p>
-                        <input type="file" accept="image/*" style="display: none;" id="schoolPhoto">
+                        <p>Click to upload school/institution photo *</p>
+                        <input type="file" accept="image/*" style="display: none;" id="schoolPhoto" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="schoolName">School/Institution Name</label>
+                        <label for="schoolName">School/Institution Name *</label>
                         <input type="text" id="schoolName" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="principalName">Principal/Head of Institution</label>
+                        <label for="principalName">Principal/Head of Institution *</label>
                         <input type="text" id="principalName" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="schoolAddress">Address</label>
+                        <label for="schoolAddress">Address *</label>
                         <textarea id="schoolAddress" required></textarea>
                     </div>
 
                     <div class="form-group">
-                        <label for="schoolContact">Contact Number</label>
+                        <label for="schoolContact">Contact Number *</label>
                         <input type="tel" id="schoolContact" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="schoolEmail">Email Address</label>
+                        <label for="schoolEmail">Email Address *</label>
                         <input type="email" id="schoolEmail" required>
                     </div>
 
                     <div class="form-group">
-                        <label>Type of Institution</label>
+                        <label>Type of Institution *</label>
                         <div class="checkbox-group">
                             <label class="checkbox-option">
-                                <input type="checkbox" name="schoolType" value="primary"> Primary
+                                <input type="checkbox" name="schoolType" value="primary" required> Primary
                             </label>
                             <label class="checkbox-option">
                                 <input type="checkbox" name="schoolType" value="secondary"> Secondary
@@ -1276,20 +1178,20 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="totalStudents">Total Number of Students</label>
+                        <label for="totalStudents">Total Number of Students *</label>
                         <input type="number" id="totalStudents" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="facilities">Facilities Available</label>
+                        <label for="facilities">Facilities Available *</label>
                         <textarea id="facilities" required></textarea>
                     </div>
 
                     <div class="form-group">
-                        <label>Preferred Program(s)</label>
+                        <label>Preferred Program(s) *</label>
                         <div class="checkbox-group">
                             <label class="checkbox-option">
-                                <input type="checkbox" name="schoolPrograms" value="labs"> Managed Labs
+                                <input type="checkbox" name="schoolPrograms" value="labs" required> Managed Labs
                             </label>
                             <label class="checkbox-option">
                                 <input type="checkbox" name="schoolPrograms" value="coding"> Coding/Robotics Program
@@ -1304,12 +1206,12 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="labSpace">Available Lab Space</label>
+                        <label for="labSpace">Available Lab Space *</label>
                         <input type="text" id="labSpace" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="startDate">Proposed Start Date</label>
+                        <label for="startDate">Proposed Start Date *</label>
                         <input type="date" id="startDate" required>
                     </div>
 
@@ -1320,7 +1222,7 @@
 
                     <div class="declaration">
                         <div class="declaration-checkbox">
-                            <input type="checkbox" id="schoolDeclaration" required>
+                            <input type="checkbox" id="schoolDeclaration" required> * 
                             <span class="declaration-text">
                                 We confirm that the above information is accurate and we are interested in collaborating with Brighten Skills for the mentioned programs.
                             </span>
@@ -1330,21 +1232,46 @@
                     <button type="submit" class="submit-btn">Submit Registration</button>
                 </form>
             </div>
+
+            <!-- Registration Data Display Modal Content -->
+            <div id="registrationDataModalContent" style="display: none;">
+                <h2>Registered Information</h2>
+                <div id="registrationData"></div>
+                <button class="pdf-button" onclick="generatePDF()">Generate PDF</button>
+            </div>
         </div>
     </div>
 
     <script>
-        function updateDateTime() {
-            const now = new Date();
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true };
-            const dateTimeString = now.toLocaleDateString('en-US', options);
-            document.getElementById('datetime').textContent = dateTimeString;
+        // Initialize jsPDF
+        window.jsPDF = window.jspdf.jsPDF;
+
+        // Function to load image and return as base64
+        function getBase64Image(imgUrl, callback) {
+            const img = new Image();
+            img.onload = function() {
+                const canvas = document.createElement('canvas');
+                canvas.width = img.width;
+                canvas.height = img.height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0);
+                const dataURL = canvas.toDataURL('image/png'); // Use PNG for better quality/transparency
+                callback(dataURL);
+            };
+            img.onerror = function() {
+                console.error('Failed to load image:', imgUrl);
+                callback(null); // Indicate failure
+            };
+            img.src = imgUrl;
         }
 
-        // Update date and time initially and every second
-        updateDateTime();
-        setInterval(updateDateTime, 1000);
+        // Get logo as base64 on load
+        let logoBase64 = null;
+        getBase64Image('images/logo.png', function(base64) {
+            logoBase64 = base64;
+        });
 
+        // Function to open registration modal and show selected form
         function openRegistrationModal(formType) {
             const modal = document.getElementById('registrationModal');
             const studentForm = document.getElementById('studentForm');
@@ -1373,6 +1300,7 @@
             modal.style.display = 'block';
         }
 
+        // Function to close registration modal
         function closeRegistrationModal() {
             const modal = document.getElementById('registrationModal');
             modal.style.display = 'none';
@@ -1389,94 +1317,268 @@
         function submitForm(event, formType) {
             event.preventDefault();
             
+            // Validate required fields
             const form = event.target;
+            const requiredFields = form.querySelectorAll('[required]');
+            let isValid = true;
+            
+            requiredFields.forEach(field => {
+                if (!field.value) {
+                    isValid = false;
+                    field.style.borderColor = 'red';
+                } else {
+                    field.style.borderColor = '';
+                }
+            });
+            
+            if (!isValid) {
+                alert('Please fill in all required fields marked with *');
+                return;
+            }
+            
             const formData = {};
             let photoData = null;
             
             // Collect form data
             const formElements = form.elements;
+            
             for (let i = 0; i < formElements.length; i++) {
                 const element = formElements[i];
                 if (element.type === 'file' && element.files.length > 0) {
-                    // Get photo data
                     const file = element.files[0];
                     const reader = new FileReader();
                     reader.onload = function(e) {
                         photoData = e.target.result;
-                        sendWhatsAppMessage(formData, photoData, formType);
+                        // Generate PDF and store data AFTER reading photo
+                        generateAndStoreRegistration(formData, photoData, formType);
+                    };
+                    reader.onerror = function() {
+                        alert('Error processing photo. Please try again.');
                     };
                     reader.readAsDataURL(file);
-                    return; // Wait for photo to be read
+                    return; // Stop form processing until photo is read
                 } else if (element.type !== 'submit') {
-                    if (element.type === 'checkbox' || element.type === 'radio') {
+                    // Exclude radio button groups from direct collection
+                    if (element.type === 'radio') {
+                         if (element.checked) {
+                             formData[element.name] = element.value;
+                         }
+                    } else if (element.type === 'checkbox') {
                         if (element.checked) {
-                            formData[element.name] = element.value;
+                            if (!formData[element.name]) {
+                                formData[element.name] = [];
+                            }
+                            formData[element.name].push(element.value);
                         }
-                    } else {
-                        formData[element.labels[0].textContent] = element.value;
-                    }
+                    } else if (element.labels && element.labels[0]) {
+                         // Use label text as key if available
+                         let key = element.labels[0].textContent.replace('*', '').trim(); // Clean key
+                         formData[key] = element.value;
+                     } else if (element.id) {
+                         // Fallback to ID if no label
+                         formData[element.id] = element.value;
+                     } else if (element.name) {
+                         // Fallback to name if no label or ID
+                         formData[element.name] = element.value;
+                     }
                 }
             }
 
-            // If no photo, send message immediately
+            // If no photo, proceed directly
             if (!photoData) {
-                sendWhatsAppMessage(formData, null, formType);
+                generateAndStoreRegistration(formData, null, formType);
             }
         }
 
-        function sendWhatsAppMessage(formData, photoData, formType) {
-            // Create WhatsApp message
-            let message = `*New ${formType.charAt(0).toUpperCase() + formType.slice(1)} Registration*\n\n`;
-            
-            // Add form data to message
-            for (const [key, value] of Object.entries(formData)) {
-                message += `${key}: ${value}\n`;
-            }
+        function generateAndStoreRegistration(formData, photoData, formType) {
+            try {
+                // Create new registration entry
+                const newEntry = {
+                    formType: formType,
+                    registrationId: generateRegistrationId(formType),
+                    data: formData,
+                    photo: photoData,
+                    timestamp: new Date().toISOString()
+                };
+                
+                // Store in localStorage
+                const existingData = JSON.parse(localStorage.getItem('registrationInfo') || '[]');
+                existingData.push(newEntry);
+                localStorage.setItem('registrationInfo', JSON.stringify(existingData));
+                
+                // Create jsPDF instance
+                const doc = new jsPDF();
+                
+                // Add logo and title/ID
+                let y = 15; // Starting Y position
+                const margin = 15;
+                const imgHeight = 30; // Height for logo
+                const photoHeight = 40; // Height for photo
+                const photoWidth = 40; // Width for photo
 
-            // Add photo if available
-            if (photoData) {
-                message += `\n*Photo has been uploaded*`;
-            }
-
-            const encodedMessage = encodeURIComponent(message);
-            const whatsappUrl = `https://wa.me/918297209437?text=${encodedMessage}`;
-            
-            // Open WhatsApp
-            window.open(whatsappUrl, '_blank');
-            
-            // Reset form and close modal
-            document.getElementById(formType + 'Form').reset();
-            closeRegistrationModal();
-        }
-
-        // Add photo upload functionality
-        document.querySelectorAll('.photo-upload').forEach(upload => {
-            upload.addEventListener('click', function() {
-                this.querySelector('input[type="file"]').click();
-            });
-        });
-
-        // Update photo upload display
-        document.querySelectorAll('input[type="file"]').forEach(input => {
-            input.addEventListener('change', function() {
-                if (this.files && this.files[0]) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        const uploadDiv = this.parentElement;
-                        uploadDiv.innerHTML = `
-                            <img src="${e.target.result}" style="max-width: 200px; max-height: 200px; object-fit: cover;">
-                            <p>Click to change photo</p>
-                        `;
-                    }.bind(this);
-                    reader.readAsDataURL(this.files[0]);
+                if (logoBase64) {
+                     doc.addImage(logoBase64, 'PNG', margin, y, 30, imgHeight);
                 }
-            });
-        });
+
+                doc.setFontSize(20);
+                doc.text(`${formType.toUpperCase()} REGISTRATION FORM`, 105, y + (imgHeight / 2) - 5, { align: 'center' });
+                
+                doc.setFontSize(12);
+                doc.text(`Registration ID: ${newEntry.registrationId}`, 105, y + (imgHeight / 2) + 5, { align: 'center' });
+
+                // Add photo if exists
+                 if (photoData) {
+                     try {
+                         doc.addImage(photoData, 'JPEG', 210 - margin - photoWidth, y, photoWidth, photoHeight); // Position photo on the right side of header
+                         y = Math.max(y, y + photoHeight); // Move starting y down if photo added
+                     } catch (imgError) {
+                         console.error('Error adding photo to PDF with jsPDF:', imgError);
+                     }
+                 }
+                 y = Math.max(y + imgHeight + 10, y + photoHeight + 10); // Ensure starting Y is below header content
+
+
+                // Add form data in a structured two-column format
+                doc.setFontSize(10);
+                const keyX = margin;
+                const valueX = 80; // X position for the value column
+                const lineHeight = 7; // Spacing between lines
+
+                for (const [key, value] of Object.entries(formData)) {
+                    const displayKey = key + ':';
+                    const displayValue = Array.isArray(value) ? value.join(', ') : value;
+
+                    // Handle line breaks for long values
+                    const splitValue = doc.splitTextToSize(displayValue, 120); // Max width for value text
+                    const splitKey = doc.splitTextToSize(displayKey, valueX - keyX - 5);
+
+                    // Determine the maximum number of lines needed for this key-value pair
+                    const maxLines = Math.max(splitKey.length, splitValue.length);
+
+                    // Add key and value
+                     if (y + (lineHeight * maxLines) > 280) { // Check for page break before adding
+                         doc.addPage();
+                         y = 15; // Reset Y for new page
+                     }
+                    doc.text(splitKey, keyX, y);
+                    doc.text(splitValue, valueX, y);
+
+                    y += lineHeight * maxLines; // Move Y down by the number of lines used
+                }
+
+
+                // Add signature and stamp areas
+                y += 20; // Add some space
+                 if (y > 280) { doc.addPage(); y = 20; }
+                doc.text('Applicant Signature: _________________________', margin, y);
+                doc.text('Date: _________________________', 120, y);
+                y += 20;
+                 if (y > 280) { doc.addPage(); y = 20; }
+                doc.text('Authorization Signature: _________________________', margin, y);
+                doc.text('Stamp: _________________________', 120, y);
+
+                // Save the PDF
+                const filename = `${formType}_Registration_${newEntry.registrationId}.pdf`;
+                doc.save(filename);
+
+                alert('Registration submitted successfully! PDF has been generated.');
+
+                // Reset form and close modal
+                const form = document.querySelector(`#${formType}Form form`);
+                if (form) {
+                    form.reset();
+                    // Reset photo preview
+                    const photoUploadDiv = form.querySelector('.photo-upload');
+                    if (photoUploadDiv) {
+                         photoUploadDiv.innerHTML = `
+                            <i class="fas fa-camera"></i>
+                            <p>Click to upload ${formType} photo${formType === 'school' ? ' *' : ''}</p>
+                            <input type="file" accept="image/*" style="display: none;" id="${formType}Photo" ${formType === 'school' ? 'required' : ''}>
+                        `;
+                    }
+                    initializePhotoUploads(); // Re-initialize listeners
+                }
+                const modal = document.getElementById('registrationModal');
+                if (modal) {
+                    modal.style.display = 'none';
+                }
+
+            } catch (error) {
+                console.error('Error in generateAndStoreRegistration:', error);
+                alert('Error processing registration or generating PDF. Please try again.');
+            }
+        }
+
+        // Function to generate a unique registration ID
+        function generateRegistrationId(formType) {
+            const timestamp = new Date().getTime();
+            let prefix = '';
+            switch (formType) {
+                case 'student':
+                    prefix = 'STU';
+                    break;
+                case 'teacher':
+                    prefix = 'TEA';
+                    break;
+                case 'school':
+                    prefix = 'SCH';
+                    break;
+                default:
+                    prefix = 'REG';
+            }
+            // Using timestamp for uniqueness - client-side only, not guaranteed unique across multiple users/browsers
+            return `${prefix}-${timestamp}`;
+        }
 
         function openUPIPayment() {
             const upiUrl = `upi://pay?pa=pallikondanrsh@ybl&pn=BRIGHTEN%20SKILLS&cu=INR`;
             window.location.href = upiUrl;
         }
+
+        // Add photo upload functionality
+        function handlePhotoUploadClick() {
+            this.querySelector('input[type="file"]').click();
+        }
+
+        function handlePhotoFileChange() {
+            if (this.files && this.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const uploadDiv = this.parentElement;
+                    uploadDiv.innerHTML = `
+                        <img src="${e.target.result}" style="max-width: 200px; max-height: 200px; object-fit: cover;">
+                        <p>Click to change photo</p>
+                        <input type="file" accept="image/*" style="display: none;" id="${this.id}">
+                    `;
+                    // Re-initialize listeners after changing innerHTML
+                    initializePhotoUploads();
+                }.bind(this);
+                reader.readAsDataURL(this.files[0]);
+            }
+        }
+
+        // Function to initialize/re-initialize photo upload event listeners
+        function initializePhotoUploads() {
+            document.querySelectorAll('.photo-upload').forEach(upload => {
+                // Remove existing listener to prevent duplicates
+                upload.removeEventListener('click', handlePhotoUploadClick);
+                // Add new listener
+                upload.addEventListener('click', handlePhotoUploadClick);
+            });
+
+            document.querySelectorAll('.photo-upload input[type="file"]').forEach(input => {
+                // Remove existing listener to prevent duplicates
+                input.removeEventListener('change', handlePhotoFileChange);
+                // Add new listener
+                input.addEventListener('change', handlePhotoFileChange);
+            });
+        }
+
+        // Initialize photo uploads on page load
+        window.addEventListener('load', initializePhotoUploads);
     </script>
+
+    <!-- Hidden div for PDF generation template -->
+    <div id="pdfTemplate" style="position: absolute; left: -9999px; top: -9999px; width: 210mm; padding: 0; margin: 0;"></div>
 </body>
 </html> 
